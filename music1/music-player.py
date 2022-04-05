@@ -21,11 +21,29 @@ list_of_files_len = len(list_of_files)
 print(g)
 
 
+def asking(song, inp, value):
+    if inp == "stop":
+        quit()
+
+    if inp == "exit":
+        song.stop()
+
+    if inp == "pause":
+        song.pause()
+        continu = input("would you like to resume? y/n ")
+        if continu == "y":
+            song.play()
+        if continu == "n":
+            time.sleep(0)
+    if inp == "skip":
+        song.stop()
+
+
 def play_music(var):
     media_player = vlc.MediaPlayer(var)
     media_player.play()
     time.sleep(1)
-    value = media_player.get_media()
+    value = media_player.is_playing()
     print(value)
 
     command = input("do what you want: ")
@@ -41,7 +59,10 @@ def play_music(var):
         continu = input("would you like to resume? y/n ")
         if continu == "y":
             media_player.play()
-
+            print(value)
+            while value == 1:
+                command3 = input("do what you want: ")
+                asking(media_player, command3, value)
         if continu == "n":
             time.sleep(0)
     if command == "skip":
@@ -61,10 +82,11 @@ def pd():
         media_player = vlc.MediaPlayer(drlist[g])
         media_player.play()
         time.sleep(1)
-        value = media_player.get_media()
+        value = media_player.is_playing()
         print(value)
 
         g = g+1
+
         command = input("do what you want: ")
 
         if command == "exit":
@@ -82,39 +104,44 @@ def pd():
             continu = input("would you like to resume? y/n ")
             if continu == "y":
                 media_player.play()
+                print(value)
+                while value == 1:
+                    command1 = input("do what you want: ")
+                    asking(media_player, command1, value)
+
             if continu == "n":
                 time.sleep(0)
 
 
-def play_music_2(var, var1):
+def play_music_on_loop(var, var1):
     media_player = vlc.MediaPlayer(var[var1])
     media_player.play()
     time.sleep(1)
     value = media_player.get_media()
     print(value)
 
-    while True:
-        command = input("do what you want: ")
+    command = input("do what you want: ")
 
-        if command == "stop":
-            quit()
+    if command == "stop":
+        quit()
 
-        if command == "exit":
-            media_player.stop()
+    if command == "exit":
+        media_player.stop()
 
-        if command == "pause":
-            media_player.pause()
-            continu = input("would you like to resume? y/n ")
-            if continu == "y":
-                media_player.play()
-            if continu == "n":
-                time.sleep(0)
+    if command == "pause":
+        media_player.pause()
+        continu = input("would you like to resume? y/n ")
+        if continu == "y":
+            media_player.play()
+            print(value)
+            while value == 1:
+                command2 = input("do what you want: ")
+                asking(media_player, command2, value)
+        if continu == "n":
+            time.sleep(0)
 
-        if command == "skip":
-            media_player.stop()
-
-        else:
-            continue
+    if command == "skip":
+        media_player.stop()
 
 
 while True:
@@ -123,15 +150,10 @@ while True:
     if chse == "exit":
         quit()
 
-    if ".m4a" in chse:
-        play_music(chse)
-    if ".mp3" in chse:
-        play_music(chse)
-
     try:
         chse_int = int(chse)
         print(list_of_files)
-        play_music_2(list_of_files, chse_int)
+        play_music_on_loop(list_of_files, chse_int)
     except:
         pass
 

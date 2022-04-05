@@ -21,7 +21,7 @@ list_of_files_len = len(list_of_files)
 print(g)
 
 
-def asking(song, inp, value):
+def asking(song, inp, var):
     if inp == "stop":
         quit()
 
@@ -77,15 +77,15 @@ def pd():
         if file1.endswith(".mp3"):
             drlist.append(file1)
     drlist_len = len(drlist)
-    g = 0
+    k = 0
     for f in range(drlist_len):
-        media_player = vlc.MediaPlayer(drlist[g])
+        media_player = vlc.MediaPlayer(drlist[k])
         media_player.play()
         time.sleep(1)
         value = media_player.is_playing()
         print(value)
 
-        g = g+1
+        k = k+1
 
         command = input("do what you want: ")
 

@@ -41,11 +41,12 @@ def play_music(var):
         continu = input("would you like to resume? y/n ")
         if continu == "y":
             media_player.play()
+
         if continu == "n":
             time.sleep(0)
-
     if command == "skip":
         media_player.stop()
+
 
 def pd():
     drlist = []
@@ -156,10 +157,14 @@ pd = plays your entire directory:
             for l in range(list_of_files_len):
                 a = random.randint(0, list_of_files_len)
                 print(a)
+                if a > 0:
+                    a = a-1
                 play_music(list_of_files[a])
 
         if ask_automatic == "n":
             print(list_of_files_len)
             a = random.randint(0, list_of_files_len)
             print(a)
+            if a > 0:
+                a = a - 1
             play_music(list_of_files[a])

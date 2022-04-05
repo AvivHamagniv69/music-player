@@ -4,6 +4,7 @@ import vlc
 import time
 import os
 
+
 list_of_files = []
 g = 0
 for file in os.listdir("."):
@@ -15,6 +16,7 @@ for file in os.listdir("."):
         print(g, os.path.join(".", file))
         list_of_files.append(file)
         g = g+1
+g = g-1
 list_of_files_len = len(list_of_files)
 print(g)
 
@@ -44,7 +46,6 @@ def play_music(var):
 
     if command == "skip":
         media_player.stop()
-
 
 def pd():
     drlist = []
@@ -91,24 +92,28 @@ def play_music_2(var, var1):
     value = media_player.get_media()
     print(value)
 
-    command = input("do what you want: ")
+    while True:
+        command = input("do what you want: ")
 
-    if command == "stop":
-        quit()
+        if command == "stop":
+            quit()
 
-    if command == "exit":
-        media_player.stop()
+        if command == "exit":
+            media_player.stop()
 
-    if command == "pause":
-        media_player.pause()
-        continu = input("would you like to resume? y/n ")
-        if continu == "y":
-            media_player.play()
-        if continu == "n":
-            time.sleep(0)
+        if command == "pause":
+            media_player.pause()
+            continu = input("would you like to resume? y/n ")
+            if continu == "y":
+                media_player.play()
+            if continu == "n":
+                time.sleep(0)
 
-    if command == "skip":
-        media_player.stop()
+        if command == "skip":
+            media_player.stop()
+
+        else:
+            continue
 
 
 while True:
@@ -147,15 +152,14 @@ pd = plays your entire directory:
     if chse == "-random":
         ask_automatic = input("make it pass to the next song automaticlly? y/n ")
         if ask_automatic == "y":
+            print(list_of_files_len)
             for l in range(list_of_files_len):
                 a = random.randint(0, list_of_files_len)
-                if a > 0:
-                    a = a - 1
+                print(a)
                 play_music(list_of_files[a])
 
         if ask_automatic == "n":
             print(list_of_files_len)
             a = random.randint(0, list_of_files_len)
-            if a > 0:
-                a = a-1
+            print(a)
             play_music(list_of_files[a])

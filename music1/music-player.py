@@ -18,7 +18,7 @@ print(counter)
 
 def run_action_by_command(song, inp, is_song_playing):
     if inp == "stop":
-        quit()
+        exit()
 
     if inp == "exit":
         song.stop()
@@ -117,7 +117,7 @@ pd = plays your entire directory:
                         ''')
 
     if chse == "-random":
-        ask_automatic = input("make it pass to the next song automaticlly? y/n ")
+        ask_automatic = input("make it pass to the next song automatically? y/n ")
         if ask_automatic == "y":
             for l in range(list_of_files_len):
                 a = random.randint(0, list_of_files_len)

@@ -4,24 +4,19 @@ import vlc
 import time
 import os
 
-
 list_of_files = []
-g = 0
+counter = 0
 for file in os.listdir("."):
-    if file.endswith(".m4a"):
-        print(g, os.path.join(".", file))
+    if file.endswith(".m4a") or file.endswith(".mp3"):
+        print(counter, os.path.join(".", file))
         list_of_files.append(file)
-        g = g+1
-    if file.endswith(".mp3"):
-        print(g, os.path.join(".", file))
-        list_of_files.append(file)
-        g = g+1
-g = g-1
+        counter = counter + 1
+counter = counter - 1
 list_of_files_len = len(list_of_files)
-print(g)
+print(counter)
 
 
-def asking(song, inp, var):
+def run_action_by_command(song, inp, is_song_playing):
     if inp == "stop":
         quit()
 
@@ -33,14 +28,18 @@ def asking(song, inp, var):
         continu = input("would you like to resume? y/n ")
         if continu == "y":
             song.play()
+            while is_song_playing == 1:
+                print(is_song_playing)
+                command = input("do what you want: ")
+                run_action_by_command(song, command, is_song_playing)
         if continu == "n":
             time.sleep(0)
     if inp == "skip":
         song.stop()
 
 
-def play_music(var):
-    media_player = vlc.MediaPlayer(var)
+def play_music(song_number):
+    media_player = vlc.MediaPlayer(song_number)
     media_player.play()
     time.sleep(1)
     value = media_player.is_playing()
@@ -48,69 +47,14 @@ def play_music(var):
 
     command = input("do what you want: ")
 
-    if command == "stop":
-        quit()
-
-    if command == "exit":
-        media_player.stop()
-
-    if command == "pause":
-        media_player.pause()
-        continu = input("would you like to resume? y/n ")
-        if continu == "y":
-            media_player.play()
-            print(value)
-            while value == 1:
-                command3 = input("do what you want: ")
-                asking(media_player, command3, value)
-        if continu == "n":
-            time.sleep(0)
-    if command == "skip":
-        media_player.stop()
+    run_action_by_command(media_player, command, value)
 
 
 def pd():
-    drlist = []
-    for file1 in os.listdir("."):
-        if file1.endswith(".m4a"):
-            drlist.append(file1)
-        if file1.endswith(".mp3"):
-            drlist.append(file1)
-    drlist_len = len(drlist)
-    k = 0
-    for f in range(drlist_len):
-        media_player = vlc.MediaPlayer(drlist[k])
-        media_player.play()
-        time.sleep(1)
-        value = media_player.is_playing()
-        print(value)
-
-        k = k+1
-
-        command = input("do what you want: ")
-
-        if command == "exit":
-            quit()
-
-        if command == "stop":
-            media_player.stop()
-            break
-
-        if command == "skip":
-            media_player.stop()
-
-        if command == "pause":
-            media_player.pause()
-            continu = input("would you like to resume? y/n ")
-            if continu == "y":
-                media_player.play()
-                print(value)
-                while value == 1:
-                    command1 = input("do what you want: ")
-                    asking(media_player, command1, value)
-
-            if continu == "n":
-                time.sleep(0)
+    number_of_song_playing = 0
+    for f in range(list_of_files_len):
+        play_music(list_of_files[number_of_song_playing])
+        number_of_song_playing = number_of_song_playing + 1
 
 
 def play_music_on_loop(var, var1):
@@ -136,7 +80,7 @@ def play_music_on_loop(var, var1):
             print(value)
             while value == 1:
                 command2 = input("do what you want: ")
-                asking(media_player, command2, value)
+                run_action_by_command(media_player, command2, value)
         if continu == "n":
             time.sleep(0)
 
@@ -175,10 +119,8 @@ pd = plays your entire directory:
     if chse == "-random":
         ask_automatic = input("make it pass to the next song automaticlly? y/n ")
         if ask_automatic == "y":
-            print(list_of_files_len)
             for l in range(list_of_files_len):
                 a = random.randint(0, list_of_files_len)
-                print(a)
                 if a > 0:
                     a = a-1
                 play_music(list_of_files[a])
@@ -186,7 +128,6 @@ pd = plays your entire directory:
         if ask_automatic == "n":
             print(list_of_files_len)
             a = random.randint(0, list_of_files_len)
-            print(a)
             if a > 0:
                 a = a - 1
             play_music(list_of_files[a])

@@ -1,3 +1,5 @@
+# for anyone viewing this repo this code is old and likely not working the way it is intended, so theres no point in looking or using it
+
 # music-player
 a cli music player written in python to play all of your downloaded music, without the need for shitty apps like spotify.
 
